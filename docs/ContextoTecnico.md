@@ -16,6 +16,8 @@
 .
 ├── node_modules/
 ├── src/
+│   ├── database/
+│   │   ├── conn.ts
 │   ├── modules/
 │   │   ├── customers/
 │   │   ├── devices/
