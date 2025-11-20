@@ -2,7 +2,18 @@
 
 ## O que Funciona
 
-- Nenhum módulo implementado ainda.
+### Infraestrutura e Banco de Dados
+
+- [x] Conexão com PostgreSQL via Prisma configurada (`src/database/conn.ts`)
+- [x] Schema do banco de dados definido (`prisma/schema.prisma`)
+  - Tabela `User` (id, name, email, password)
+  - Tabela `Customer` (id, firstName, lastName, ddd, phone, cpf, createdAt, updatedAt)
+  - Tabela `Device` (id, customerId, brand, model, serial, createdAt, updatedAt)
+  - Tabela `ServiceOrder` (id, customerId, deviceId, number, deviceProblem, service, value, status, createdAt, updatedAt)
+- [x] Relacionamentos entre tabelas configurados
+  - Customer → Device (1:N)
+  - Customer → ServiceOrder (1:N)
+  - Device → ServiceOrder (1:N)
 
 ## O que Resta Construir
 
@@ -21,7 +32,7 @@
 
 ## Status Atual
 
-**Fase:** Planejamento e Estrutura Inicial
+**Fase:** Infraestrutura Configurada - Pronto para Implementação de Módulos
 
 **Última atualização:** 2025-11-20
 
