@@ -17,14 +17,18 @@
 ├── node_modules/
 ├── src/
 │   ├── modules/
-│   │   ├── clientes/
-│   │   ├── aparelhos/
-│   │   ├── ordens-servico/
+│   │   ├── customers/
+│   │   ├── devices/
+│   │   ├── service-orders/
 │   │   └── auth/
-│   ├── lib/
-│   │   ├── prisma.ts
-│   │   └── fastify.ts
-│   ├── server.ts
+│   ├── plugins/
+│   │   ├── sensible.ts
+│   │   └── support.ts
+│   ├── routes/
+│   │   ├── root.ts
+│   │   └── users.ts
+│   │   └── ...
+│   ├── schemas/
 │   └── app.ts
 ├── prisma/
 │   └── schema.prisma
