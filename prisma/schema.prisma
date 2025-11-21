@@ -27,7 +27,7 @@ model Customer {
   lastName  String
   ddd       String
   phone     String
-  cpf       String?   @unique
+  cpf       String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
