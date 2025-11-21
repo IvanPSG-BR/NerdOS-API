@@ -14,14 +14,14 @@ datasource db {
   url       = env("DIRECT_URL")
 }
 
-model User {
+model Users {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
   password  String
 }
 
-model Customer {
+model Customers {
   id        Int      @id @default(autoincrement())
   firstName String
   lastName  String
@@ -31,11 +31,11 @@ model Customer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  devices       Device[]
-  serviceOrders ServiceOrder[]
+  devices       Devices[]
+  serviceOrders ServiceOrders[]
 }
 
-model Device {
+model Devices {
   id        Int      @id @default(autoincrement())
   customerId Int
   brand     String
@@ -44,11 +44,11 @@ model Device {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  customer      Customer       @relation(fields: [customerId], references: [id])
-  serviceOrders ServiceOrder[]
+  customer      Customers       @relation(fields: [customerId], references: [id])
+  serviceOrders ServiceOrders[]
 }
 
-model ServiceOrder {
+model ServiceOrders {
   id        Int      @id @default(autoincrement())
   customerId Int
   deviceId  Int
@@ -60,6 +60,6 @@ model ServiceOrder {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  customer Customer @relation(fields: [customerId], references: [id])
-  device   Device   @relation(fields: [deviceId], references: [id])
+  customer Customers @relation(fields: [customerId], references: [id])
+  device   Devices   @relation(fields: [deviceId], references: [id])
 }

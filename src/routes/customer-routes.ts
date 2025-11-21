@@ -2,6 +2,7 @@ import { FastifyPluginAsync } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { CreateCustomerSchema, CustomerSchema } from '../schemas/customer-schemas'
 import { z } from 'zod'
+import * as CustomerController from '../modules/customers/customer-controller'
 
 const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const server = fastify.withTypeProvider<ZodTypeProvider>()
@@ -10,13 +11,17 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
         schema: {
             tags: ['customers'],
             desc: 'Lista clientes',
+            querystring: z.object({
+                limit: z.coerce.number().min(1).max(100).default(10),
+                offset: z.coerce.number().min(0).default(0),
+                name: z.string().optional(),
+                phone: z.string().optional()
+            }),
             response: {
                 200: z.array(CustomerSchema)
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.listCustomers)
 
     server.post('/customers', {
         schema: {
@@ -27,9 +32,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 201: z.object({})
             }
         }
-    }, async function (req, rep) {
-        return {}
-    })
+    }, CustomerController.createCustomer)
 
     server.get('/customers/{id}', {
         schema: {
@@ -39,9 +42,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 200: CustomerSchema
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerById)
 
     server.put('/customers/{id}', {
         schema: {
@@ -52,9 +53,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 200: z.object({})
             }
         }
-    }, async function (req, rep) {
-        return {}
-    })
+    }, CustomerController.updateCustomer)
 
     server.delete('/customers/{id}', {
         schema: {
@@ -62,9 +61,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
             desc: 'Deleta um cliente',
             // 204 No Content - Sem corpo de resposta
         }
-    }, async function (req, rep) {
-        return
-    })
+    }, CustomerController.deleteCustomer)
 
     server.get('/customers/{id}/devices', {
         schema: {
@@ -74,9 +71,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 200: z.array(z.any())
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerDevices)
 
     server.get('/customers/{id}/service-orders', {
         schema: {
@@ -86,9 +81,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 200: z.array(z.any())
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerServiceOrders)
 
     server.get('/customers/{id}/name', {
         schema: {
@@ -101,9 +94,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 })
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerName)
 
     server.patch('/customers/{id}/name', {
         schema: {
@@ -117,9 +108,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 200: z.object({})
             }
         }
-    }, async function (req, rep) {
-        return {}
-    })
+    }, CustomerController.updateCustomerName)
 
     server.get('/customers/{id}/phone-number', {
         schema: {
@@ -132,9 +121,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 })
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerPhoneNumber)
 
     server.patch('/customers/{id}/phone-number', {
         schema: {
@@ -148,9 +135,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 200: z.object({})
             }
         }
-    }, async function (req, rep) {
-        return {}
-    })
+    }, CustomerController.updateCustomerPhoneNumber)
 
     server.get('/customers/{id}/cpf', {
         schema: {
@@ -162,9 +147,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 })
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerCpf)
 
     server.get('/customers/{id}/created-at', {
         schema: {
@@ -176,9 +159,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 })
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerCreatedAt)
 
     server.get('/customers/{id}/updated-at', {
         schema: {
@@ -190,9 +171,7 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
                 })
             }
         }
-    }, async function (req, rep) {
-        return { placeholder: true } as any
-    })
+    }, CustomerController.getCustomerUpdatedAt)
 }
 
 export default customerRoutes

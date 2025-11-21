@@ -20,3 +20,7 @@ export const CreateCustomerSchema = CustomerSchema.omit({
 export const UpdateCustomerSchema = CreateCustomerSchema.partial()
 
 export type Customer = z.infer<typeof CustomerSchema>
+
+export type CreateCustomer = z.infer<typeof CreateCustomerSchema>
+
+export type UpdateCustomer = z.infer<typeof UpdateCustomerSchema>
