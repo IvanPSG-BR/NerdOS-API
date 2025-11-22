@@ -6,14 +6,34 @@
 
 - [x] Conexão com PostgreSQL via Prisma configurada (`src/database/conn.ts`)
 - [x] Schema do banco de dados definido (`prisma/schema.prisma`)
-  - Tabela `User` (id, name, email, password)
-  - Tabela `Customer` (id, firstName, lastName, ddd, phone, cpf, createdAt, updatedAt)
-  - Tabela `Device` (id, customerId, brand, model, serial, createdAt, updatedAt)
-  - Tabela `ServiceOrder` (id, customerId, deviceId, number, deviceProblem, service, value, status, createdAt, updatedAt)
+  - Tabela `Users` (id, name, email, password)
+  - Tabela `Customers` (id, firstName, lastName, ddd, phone, cpf, createdAt, updatedAt)
+  - Tabela `Devices` (id, customerId, brand, model, serial, createdAt, updatedAt)
+  - Tabela `ServiceOrders` (id, customerId, deviceId, number, deviceProblem, service, value, status, createdAt, updatedAt)
 - [x] Relacionamentos entre tabelas configurados
-  - Customer → Device (1:N)
-  - Customer → ServiceOrder (1:N)
-  - Device → ServiceOrder (1:N)
+  - Customers → Devices (1:N)
+  - Customers → ServiceOrders (1:N)
+  - Devices → ServiceOrders (1:N)
+
+### Aplicação Fastify
+
+- [x] Instância do Fastify configurada (`src/app.ts`)
+- [x] Integração com `fastify-type-provider-zod` para validação de schemas
+- [x] Configuração de CORS
+- [x] Documentação Swagger configurada
+
+### Módulo de Clientes
+
+- [x] Schemas de validação Zod para Clientes (`src/schemas/customer-schemas.ts`)
+- [x] Rotas CRUD completas de Clientes (`src/routes/customer-routes.ts`)
+  - POST `/customers` - Criar cliente
+  - GET `/customers` - Listar todos os clientes
+  - GET `/customers/{id}` - Buscar cliente por ID
+  - PUT `/customers/{id}` - Atualizar cliente
+  - DELETE `/customers/{id}` - Deletar cliente
+- [x] Controller de Clientes (`src/modules/customers/customer-controller.ts`)
+- [x] Service de Clientes com lógica de negócio (`src/modules/customers/customer-service.ts`)
+- [x] Modelo Customer com métodos utilitários (`src/modules/customers/customer.ts`)
 
 ## O que Resta Construir
 
@@ -24,21 +44,39 @@
 - [ ] Implementar Hash de Senha com `bcryptjs`.
 - [ ] Integrar validação Zod nas rotas de Auth.
 
-### Módulo de Clientes e Aparelhos
+### Módulo de Aparelhos
 
-- [ ] Implementar CRUD de Clientes.
-- [ ] Implementar CRUD de Aparelhos (com vínculo obrigatório a Cliente).
-- [ ] Implementar endpoint de Histórico do Cliente (aparelhos + OSs).
+- [ ] Implementar CRUD de Aparelhos (com vínculo obrigatório a Cliente)
+- [ ] Implementar validação de dados de aparelhos
+
+### Módulo de Ordens de Serviço
+
+- [ ] Implementar CRUD de Ordens de Serviço
+- [ ] Implementar geração automática de número de OS
+- [ ] Implementar gestão de status da OS
 
 ## Status Atual
 
-**Fase:** Infraestrutura Configurada - Pronto para Implementação de Módulos
+**Fase:** Desenvolvimento de Módulos - CRUD de Clientes Implementado
 
-**Última atualização:** 2025-11-20
+**Última atualização:** 2025-11-21
 
-## Problemas Conhecidos
+### Progresso Recente (21/11/2025)
 
-- Nenhum problema conhecido no momento.
+- ✅ Implementação completa do CRUD básico de Clientes
+- ✅ Criação da arquitetura em camadas (Routes → Controller → Service → Model)
+- ✅ Schemas de validação e resposta para todas as rotas de clientes
+- ✅ Padronização dos nomes das tabelas para plural (Users, Customers, Devices, ServiceOrders)
+- ✅ Configuração da aplicação Fastify com validação Zod e Swagger
+
+## Problemas Conhecidos e TODOs
+
+### Módulo de Clientes
+
+- [ ] Adicionar campo `status` à tabela `Customers` para soft delete
+- [ ] Remover a possibilidade de deletar permanentemente o cliente do histórico
+- [ ] Desenvolver regras de negócio mais avançadas (validações de CPF, telefone, etc.)
+- [ ] Implementar endpoint de Histórico do Cliente (aparelhos + OSs)
 
 ## Evolução das Decisões do Projeto
 
