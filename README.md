@@ -31,7 +31,20 @@ Essa API fornece endpoints que salvam os dados acerca do cliente, seu aparelho e
 
 ## Status do Projeto
 
-O projeto NerdOS API encontra-se atualmente na fase de planejamento e estrutura inicial.
+O projeto NerdOS API encontra-se atualmente em **desenvolvimento ativo**.
+
+**Fase Atual:** Implementação de Módulos
+
+**Última Atualização:** 21/11/2025
+
+### Progresso Recente
+
+- ✅ **Infraestrutura completa:** Banco de dados PostgreSQL configurado com Prisma
+- ✅ **Aplicação Fastify:** Configurada com validação Zod e documentação Swagger
+- ✅ **CRUD de Clientes:** Implementado com arquitetura em camadas (Routes → Controller → Service → Model)
+- 🚧 **Em desenvolvimento:** Módulos de Aparelhos e Ordens de Serviço
+
+Para mais detalhes sobre o progresso, consulte [docs/Progresso.md](docs/Progresso.md).
 
 ## Funcionalidades
 
@@ -45,9 +58,9 @@ As principais funcionalidades planejadas para a plataforma incluem:
 
 **Funcionalidades de Clientes e Aparelhos:**
 
-- CRUD completo de Clientes (Nome, Telefone/WhatsApp, CPF).
-- CRUD completo de Aparelhos vinculados a Clientes (Marca, Modelo, IMEI/Nº Série).
-- Consulta de histórico do cliente (aparelhos + OSs).
+- ✅ CRUD completo de Clientes (Nome, Sobrenome, DDD, Telefone/WhatsApp, CPF) - **Implementado**
+- 🚧 CRUD completo de Aparelhos vinculados a Clientes (Marca, Modelo, IMEI/Nº Série) - **Em desenvolvimento**
+- 🚧 Consulta de histórico do cliente (aparelhos + OSs) - **Planejado**
 
 **Funcionalidades de Ordem de Serviço:**
 
