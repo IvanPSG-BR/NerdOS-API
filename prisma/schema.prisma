@@ -11,7 +11,20 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DIRECT_URL")
+  url       = env("DATABASE_URL")
+}
+
+enum CUSTOMERSTATUS {
+  ACTIVE
+  INACTIVE
+}
+
+enum OSSTATUS {
+  EM_ANALISE
+  AGUARDANDO_APROVACAO
+  EM_REPARO
+  CONCLUIDO
+  ENTREGUE
 }
 
 model Users {
@@ -28,6 +41,7 @@ model Customers {
   ddd       String
   phone     String
   cpf       String?  @unique
+  customerStatus    CUSTOMERSTATUS   @default(ACTIVE)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -56,7 +70,7 @@ model ServiceOrders {
   deviceProblem String
   service   String
   value     Float
-  status    String
+  osStatus  OSSTATUS @default(EM_ANALISE)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

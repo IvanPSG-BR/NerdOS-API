@@ -17,5 +17,5 @@
 
 - RN-OS01: Ao criar uma OS, deve-se vincular um Cliente e um de seus Aparelhos, registrando o "defeito reclamado" inicial.
 - RN-OS02: O backend deve gerar um **número de OS sequencial e único** (ex: "2024-001") que serve como identificador de negócio.
-- RN-OS03: A OS deve ter um fluxo de status claro (ex: 'Em Análise', 'Aguardando Aprovação', 'Aguardando Peça', 'Em Reparo', 'Concluído', 'Entregue').
+- RN-OS03: A OS deve ter um fluxo de status claro (ex: 'Em Análise', 'Aguardando Aprovação', 'Em Reparo', 'Concluído', 'Entregue').
 - RN-OS04: O técnico deve poder atualizar a OS com "diagnóstico técnico", "serviço realizado", "peças utilizadas" e o "valor" final do serviço.
