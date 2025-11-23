@@ -76,14 +76,14 @@ export async function updateCustomer(req: FastifyRequest<{
     return {};
 }
 
-// DELETE /customers/{id} - Deleta um cliente
-export async function deleteCustomer(req: FastifyRequest<{
+// DELETE /customers/{id} - Desativa um cliente
+export async function deactivateCustomer(req: FastifyRequest<{
     Params: {
         id: string;
     }
 }>, rep: FastifyReply) {
     const id = parseInt(req.params.id);
-    await CustomerService.deleteById(id);
+    await CustomerService.deactivateById(id);
     rep.status(204);
     return;
 }
