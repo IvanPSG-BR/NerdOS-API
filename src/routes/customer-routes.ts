@@ -3,174 +3,93 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { CreateCustomerSchema, CustomerSchema } from '../schemas/customer-schemas'
 import { z } from 'zod'
 import * as CustomerController from '../modules/customers/customer-controller'
+import { getOneSchema, getManySchema, postSchema, updateSchema, deleteSchema } from '../utils/route-schema-helpers'
 
 const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const server = fastify.withTypeProvider<ZodTypeProvider>()
     
     server.get('/customers', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Lista clientes',
-            querystring: z.object({
+        schema: getManySchema(
+            ['customers'],
+            'Lista clientes',
+            CustomerSchema,
+            z.object({
                 limit: z.coerce.number().min(1).max(100).default(10),
                 offset: z.coerce.number().min(0).default(0),
                 name: z.string().optional(),
                 phone: z.string().optional()
-            }),
-            response: {
-                200: z.array(CustomerSchema)
-            }
-        }
+            })
+        )
     }, CustomerController.listCustomers)
 
     server.post('/customers', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Cria um novo cliente',
-            body: CreateCustomerSchema,
-            response: {
-                201: z.object({})
-            }
-        }
+        schema: postSchema(['customers'], 'Cria um novo cliente', CreateCustomerSchema)
     }, CustomerController.createCustomer)
 
     server.get('/customers/{id}', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Busca um cliente por ID',
-            response: {
-                200: CustomerSchema
-            }
-        }
+        schema: getOneSchema(['customers'], 'Busca um cliente por ID', CustomerSchema)
     }, CustomerController.getCustomerById)
 
     server.put('/customers/{id}', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Atualiza um cliente',
-            body: CreateCustomerSchema,
-            response: {
-                200: z.object({})
-            }
-        }
+        schema: updateSchema(['customers'], 'Atualiza um cliente', CreateCustomerSchema)
     }, CustomerController.updateCustomer)
 
     server.delete('/customers/{id}', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Deleta um cliente',
-            // 204 No Content - Sem corpo de resposta
-        }
-    }, CustomerController.deleteCustomer)
+        schema: deleteSchema(['customers'], 'Desativa um cliente')
+    }, CustomerController.deactivateCustomer)
 
     server.get('/customers/{id}/devices', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Lista dispositivos de um cliente',
-            response: {
-                200: z.array(z.any())
-            }
-        }
+        schema: getManySchema(['customers'], 'Lista dispositivos de um cliente', z.any())
     }, CustomerController.getCustomerDevices)
 
     server.get('/customers/{id}/service-orders', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Lista ordens de serviço de um cliente',
-            response: {
-                200: z.array(z.any())
-            }
-        }
+        schema: getManySchema(['customers'], 'Lista ordens de serviço de um cliente', z.any())
     }, CustomerController.getCustomerServiceOrders)
 
     server.get('/customers/{id}/name', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Busca o nome de um cliente',
-            response: {
-                200: z.object({
-                    firstName: z.string(),
-                    lastName: z.string()
-                })
-            }
-        }
+        schema: getOneSchema(['customers'], 'Busca o nome de um cliente', z.object({
+            firstName: z.string(),
+            lastName: z.string()
+        }))
     }, CustomerController.getCustomerName)
 
     server.patch('/customers/{id}/name', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Atualiza o nome de um cliente',
-            body: z.object({
-                firstName: z.string().optional(),
-                lastName: z.string().optional()
-            }),
-            response: {
-                200: z.object({})
-            }
-        }
+        schema: updateSchema(['customers'], 'Atualiza o nome de um cliente', z.object({
+            firstName: z.string().optional(),
+            lastName: z.string().optional()
+        }))
     }, CustomerController.updateCustomerName)
 
     server.get('/customers/{id}/phone-number', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Busca o telefone de um cliente',
-            response: {
-                200: z.object({
-                    ddd: z.string(),
-                    phone: z.string()
-                })
-            }
-        }
+        schema: getOneSchema(['customers'], 'Busca o telefone de um cliente', z.object({
+            ddd: z.string(),
+            phone: z.string()
+        }))
     }, CustomerController.getCustomerPhoneNumber)
 
     server.patch('/customers/{id}/phone-number', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Atualiza o telefone de um cliente',
-            body: z.object({
-                ddd: z.string().optional(),
-                phone: z.string().optional()
-            }),
-            response: {
-                200: z.object({})
-            }
-        }
+        schema: updateSchema(['customers'], 'Atualiza o telefone de um cliente', z.object({
+            ddd: z.string().optional(),
+            phone: z.string().optional()
+        }))
     }, CustomerController.updateCustomerPhoneNumber)
 
     server.get('/customers/{id}/cpf', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Busca o CPF de um cliente',
-            response: {
-                200: z.object({
-                    cpf: z.string().nullable()
-                })
-            }
-        }
+        schema: getOneSchema(['customers'], 'Busca o CPF de um cliente', z.object({
+            cpf: z.string().nullable()
+        }))
     }, CustomerController.getCustomerCpf)
 
     server.get('/customers/{id}/created-at', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Busca a data de criação de um cliente',
-            response: {
-                200: z.object({
-                    createdAt: z.date()
-                })
-            }
-        }
+        schema: getOneSchema(['customers'], 'Busca a data de criação de um cliente', z.object({
+            createdAt: z.date()
+        }))
     }, CustomerController.getCustomerCreatedAt)
 
     server.get('/customers/{id}/updated-at', {
-        schema: {
-            tags: ['customers'],
-            desc: 'Busca a data de atualização de um cliente',
-            response: {
-                200: z.object({
-                    updatedAt: z.date()
-                })
-            }
-        }
+        schema: getOneSchema(['customers'], 'Busca a data de atualização de um cliente', z.object({
+            updatedAt: z.date()
+        }))
     }, CustomerController.getCustomerUpdatedAt)
 }
 

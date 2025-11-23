@@ -77,12 +77,8 @@ export async function update(id: number, data: UpdateCustomerType): Promise<Cust
     return updatedCustomer;
 }
 
-export async function deleteById(id: number): Promise<void> {
-    await customersRepo.delete({
-        where: {
-            id
-        }
-    });
+export async function deactivateById(id: number): Promise<void> {
+    // LÓGICA PARA DESATIVAR CLIENTE
 }
 
 export async function getDevices(id: number): Promise<any[]> {
