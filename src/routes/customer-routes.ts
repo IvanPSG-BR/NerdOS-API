@@ -1,9 +1,9 @@
 import { FastifyPluginAsync } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { CreateCustomerSchema, CustomerSchema } from '../schemas/customer-schemas'
+import { CreateCustomerSchema, CustomerSchema } from '../schemas/customer-schemas.js'
 import { z } from 'zod'
-import * as CustomerController from '../modules/customers/customer-controller'
-import { getOneSchema, getManySchema, postSchema, updateSchema, deleteSchema } from '../utils/route-schema-helpers'
+import * as CustomerController from '../modules/customers/customer-controller.js'
+import { getOneSchema, getManySchema, postSchema, updateSchema, deleteSchema } from '../utils/route-schema-helpers.js'
 
 const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const server = fastify.withTypeProvider<ZodTypeProvider>()

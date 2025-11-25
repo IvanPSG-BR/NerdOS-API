@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import * as CustomerService from './customer-service';
+import * as CustomerService from './customer-service.js';
 
 // GET /customers - Lista clientes
 export async function listCustomers(req: FastifyRequest<{
