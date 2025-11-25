@@ -7,17 +7,17 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "npm run build:ts && tsc -p test/tsconfig.json && c8 node --test -r ts-node/register \"test/**/*.ts\"",
-    "start": "npm run build:ts && fastify start -l info dist/app.js",
+    "test": "pnpm run build:ts && tsc -p test/tsconfig.json && c8 node --test -r ts-node/register \"test/**/*.ts\"",
+    "start": "pnpm run build:ts && fastify start -l info dist/app.js",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
-    "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
+    "dev": "pnpm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"pnpm:watch:ts\" \"pnpm:dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
     "@fastify/cors": "^11.1.0",
@@ -27,7 +27,6 @@
     "@prisma/client": "^7.0.0",
     "bcrypt": "^6.0.0",
     "date-fns": "^4.1.0",
-    "dotenv": "^17.2.3",
     "fastify": "^5.6.2",
     "fastify-cli": "^7.4.1",
     "fastify-plugin": "^5.0.0",
@@ -42,6 +41,7 @@
     "fastify-tsconfig": "^3.0.0",
     "pino-pretty": "^13.1.2",
     "prisma": "^6.19.0",
+    "dotenv": "^17.2.3",
     "typescript": "^5.9.3"
   }
 }

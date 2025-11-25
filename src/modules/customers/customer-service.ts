@@ -1,9 +1,9 @@
-import { Customers as CustomerType, PrismaClient } from '../../generated/prisma';
-import { Customer } from './customer';
-import { CreateCustomer as CreateCustomerType, UpdateCustomer as UpdateCustomerType } from '../../schemas/customer-schemas';
+import { Customers as CustomerType, PrismaClient } from '../../generated/prisma/client.js';
+import { Customer } from './customer.js';
+import { CreateCustomer as CreateCustomerType, UpdateCustomer as UpdateCustomerType } from '../../schemas/customer-schemas.js';
 
 const customerUtil = new Customer({} as CustomerType);
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({} as any);
 const customersRepo = prisma.customers;
 
 export async function listAll(offset: number, limit: number): Promise<CustomerType[]> {
@@ -15,24 +15,24 @@ export async function listAll(offset: number, limit: number): Promise<CustomerTy
     return customers;
 }
 
-export async function findByName(firstName: string, lastName:string | null): Promise<CustomerType | null> {
-    let foundCustomer = null;
+export async function findByName(firstName: string, lastName:string | null): Promise<CustomerType[]> {
+    let foundCustomers: CustomerType[] = [];
     if (lastName) {
-        foundCustomer = await customersRepo.findMany({
+        foundCustomers = await customersRepo.findMany({
             where: {
                 firstName,
                 lastName
             }
         });
     } else {
-        foundCustomer = await customersRepo.findMany({
+        foundCustomers = await customersRepo.findMany({
             where: {
                 firstName
             }
         });
     }
 
-    return foundCustomer;
+    return foundCustomers;
 }
 
 export async function findByPhone(phoneNumber: string): Promise<CustomerType | null> {

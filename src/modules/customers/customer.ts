@@ -1,4 +1,4 @@
-import { Customers as PrismaCustomer } from '../../generated/prisma';
+import { CUSTOMERSTATUS, Customers as PrismaCustomer } from '../../generated/prisma/client.js';
 
 export class Customer implements PrismaCustomer {
     id: number;
@@ -9,6 +9,7 @@ export class Customer implements PrismaCustomer {
     cpf: string | null;
     createdAt: Date;
     updatedAt: Date;
+    customerStatus: CUSTOMERSTATUS;
 
     constructor(data: PrismaCustomer) {
         Object.assign(this, data);
@@ -20,6 +21,7 @@ export class Customer implements PrismaCustomer {
         this.cpf = data.cpf;
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = new Date(data.updatedAt);
+        this.customerStatus = data.customerStatus;
     }
 
     get fullName(): string {
