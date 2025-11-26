@@ -6,7 +6,7 @@
 - **Build Tool:** npm
 - **Framework Backend:** Fastify
 - **Framework de Testes:** Jest
-- **SGBD Relacional:** PostgreSQL (Hospedado no Supabase)
+- **SGBD Relacional:** PostgreSQL (Hospedado no Neon)
 - **Validação de Schemas:** Zod (Integrado via `fastify-type-provider-zod`)
 - **Documentação de API:** @fastify/swagger e @fastify/swagger-ui (Geração automática via Schemas Zod)
 
