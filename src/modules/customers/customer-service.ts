@@ -1,197 +1,70 @@
-import { Customers as CustomerType, PrismaClient } from '../../generated/prisma/client.js';
+import { Customers as CustomerType } from '../../generated/prisma/client.js';
 import { Customer } from './customer.js';
 import { CreateCustomer as CreateCustomerType, UpdateCustomer as UpdateCustomerType } from '../../schemas/customer-schemas.js';
 
-const customerUtil = new Customer({} as CustomerType);
-const prisma = new PrismaClient({} as any);
-const customersRepo = prisma.customers;
+// ==================== FUNÇÕES DE SERVIÇO (Regras de Negócio) ====================
+// O acesso a dados agora é responsabilidade da classe Customer (Active Record)
 
 export async function listAll(offset: number, limit: number): Promise<CustomerType[]> {
-    let customers = await customersRepo.findMany({
-        skip: offset,
-        take: limit
-    });
-
-    return customers;
+    return Customer.listAll(offset, limit);
 }
 
-export async function findByName(firstName: string, lastName:string | null): Promise<CustomerType[]> {
-    let foundCustomers: CustomerType[] = [];
-    if (lastName) {
-        foundCustomers = await customersRepo.findMany({
-            where: {
-                firstName,
-                lastName
-            }
-        });
-    } else {
-        foundCustomers = await customersRepo.findMany({
-            where: {
-                firstName
-            }
-        });
-    }
-
-    return foundCustomers;
+export async function findByName(firstName: string, lastName: string | null): Promise<CustomerType[]> {
+    return Customer.findByName(firstName, lastName);
 }
 
 export async function findByPhone(phoneNumber: string): Promise<CustomerType | null> {
-    let foundCustomer = null;
-    if (customerUtil.isValidPhone(phoneNumber)) {
-        foundCustomer = await customersRepo.findFirst({
-                where: {
-                    phone: phoneNumber
-                }
-            });
-    }
-
-    return foundCustomer;
+    return Customer.findByPhone(phoneNumber);
 }
 
 export async function findById(id: number): Promise<CustomerType | null> {
-    let foundCustomer = await customersRepo.findFirst({
-        where: {
-            id
-        }
-    });
-
-    return foundCustomer;
+    return Customer.findById(id);
 }
 
 export async function register(data: CreateCustomerType): Promise<CustomerType> {
-    const newCustomer = await customersRepo.create({
-        data
-    });
-
-    return newCustomer;
+    return Customer.create(data);
 }
 
 export async function update(id: number, data: UpdateCustomerType): Promise<CustomerType> {
-    const updatedCustomer = await customersRepo.update({
-        where: {
-            id
-        },
-        data
-    });
-
-    return updatedCustomer;
+    return Customer.update(id, data);
 }
 
 export async function deactivateById(id: number): Promise<void> {
-    // LÓGICA PARA DESATIVAR CLIENTE
+    return Customer.deactivateById(id);
 }
 
 export async function getDevices(id: number): Promise<any[]> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        include: {
-            devices: true
-        }
-    });
-
-    return customer?.devices || [];
+    return Customer.getDevices(id);
 }
 
 export async function getServiceOrders(id: number): Promise<any[]> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        include: {
-            serviceOrders: true
-        }
-    });
-
-    return customer?.serviceOrders || [];
+    return Customer.getServiceOrders(id);
 }
 
 export async function getName(id: number): Promise<{ firstName: string; lastName: string } | null> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        select: {
-            firstName: true,
-            lastName: true
-        }
-    });
-
-    return customer;
+    return Customer.getName(id);
 }
 
 export async function updateName(id: number, data: { firstName?: string; lastName?: string }): Promise<CustomerType> {
-    const updatedCustomer = await customersRepo.update({
-        where: {
-            id
-        },
-        data
-    });
-
-    return updatedCustomer;
+    return Customer.updateName(id, data);
 }
 
 export async function getPhoneNumber(id: number): Promise<{ ddd: string; phone: string } | null> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        select: {
-            ddd: true,
-            phone: true
-        }
-    });
-
-    return customer;
+    return Customer.getPhoneNumber(id);
 }
 
 export async function updatePhoneNumber(id: number, data: { ddd?: string; phone?: string }): Promise<CustomerType> {
-    const updatedCustomer = await customersRepo.update({
-        where: {
-            id
-        },
-        data
-    });
-
-    return updatedCustomer;
+    return Customer.updatePhoneNumber(id, data);
 }
 
 export async function getCpf(id: number): Promise<{ cpf: string | null } | null> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        select: {
-            cpf: true
-        }
-    });
-
-    return customer;
+    return Customer.getCpf(id);
 }
 
 export async function getCreatedAt(id: number): Promise<{ createdAt: Date } | null> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        select: {
-            createdAt: true
-        }
-    });
-
-    return customer;
+    return Customer.getCreatedAt(id);
 }
 
 export async function getUpdatedAt(id: number): Promise<{ updatedAt: Date } | null> {
-    const customer = await customersRepo.findFirst({
-        where: {
-            id
-        },
-        select: {
-            updatedAt: true
-        }
-    });
-
-    return customer;
+    return Customer.getUpdatedAt(id);
 }

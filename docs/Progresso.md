@@ -32,8 +32,11 @@
   - PUT `/customers/{id}` - Atualizar cliente
   - DELETE `/customers/{id}` - Deletar cliente
 - [x] Controller de Clientes (`src/modules/customers/customer-controller.ts`)
-- [x] Service de Clientes com lógica de negócio (`src/modules/customers/customer-service.ts`)
-- [x] Modelo Customer com métodos utilitários (`src/modules/customers/customer.ts`)
+- [x] Service de Clientes para regras de negócio (`src/modules/customers/customer-service.ts`)
+- [x] Modelo Customer com padrão Active Record (`src/modules/customers/customer.ts`)
+  - Métodos estáticos de acesso a dados (listAll, findById, create, update, etc.)
+  - Métodos de validação (isValidCpf, isValidPhone)
+  - Getters utilitários (fullName, formattedPhone)
 
 ## O que Resta Construir
 
@@ -59,9 +62,16 @@
 
 **Fase:** Desenvolvimento de Módulos - CRUD de Clientes Implementado
 
-**Última atualização:** 2025-11-21
+**Última atualização:** 2025-11-26
 
-### Progresso Recente (21/11/2025)
+### Progresso Recente (26/11/2025)
+
+- ✅ Refatoração do módulo de Clientes para padrão Active Record
+  - Lógica de acesso a dados movida para `Customer` (métodos estáticos)
+  - `CustomerService` agora contém apenas regras de negócio
+  - Separação clara de responsabilidades entre camadas
+
+### Progresso Anterior (21/11/2025)
 
 - ✅ Implementação completa do CRUD básico de Clientes
 - ✅ Criação da arquitetura em camadas (Routes → Controller → Service → Model)
@@ -71,11 +81,11 @@
 
 ## Problemas Conhecidos e TODOs
 
-### Módulo de Clientes
+### Clientes
 
-- [ ] Adicionar campo `status` à tabela `Customers` para soft delete
-- [ ] Remover a possibilidade de deletar permanentemente o cliente do histórico
-- [ ] Desenvolver regras de negócio mais avançadas (validações de CPF, telefone, etc.)
+- [X] Adicionar campo `status` à tabela `Customers` para soft delete
+- [X] Remover a possibilidade de deletar permanentemente o cliente do histórico
+- [ ] Desenvolver regras de negócio mais avançadas no `CustomerService`
 - [ ] Implementar endpoint de Histórico do Cliente (aparelhos + OSs)
 
 ## Evolução das Decisões do Projeto
@@ -83,6 +93,7 @@
 ### Decisões de Arquitetura
 
 - **Monolito Modular:** Escolhido para simplificar o deploy e a comunicação interna, mantendo a organização por módulos (Auth, Clientes, OS).
+- **Active Record:** Escolhido para simplificar o acesso a dados e garantir consistência entre camadas.
 - **Fastify:** Escolhido por performance e arquitetura de plugins, além da integração nativa com validação de schemas.
 
 ### Decisões de Modelagem
