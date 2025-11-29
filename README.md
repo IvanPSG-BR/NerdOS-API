@@ -8,6 +8,7 @@
   - [Índice](#índice)
   - [Descrição do Projeto](#descrição-do-projeto)
   - [Status do Projeto](#status-do-projeto)
+    - [Progresso Recente](#progresso-recente)
   - [Funcionalidades](#funcionalidades)
   - [Tecnologias Utilizadas](#tecnologias-utilizadas)
   - [Licença](#licença)
@@ -26,8 +27,8 @@ Essa API fornece endpoints que salvam os dados acerca do cliente, seu aparelho e
 **Principais Módulos:**
 
 - **Autenticação e Usuários:** Gerenciamento de usuários e autenticação segura.
-- **Clientes e Aparelhos:** Cadastro e gerenciamento de clientes e seus aparelhos.
-- **Ordens de Serviço:** Criação e acompanhamento de OSs com fluxo de status claro (Em Análise, Aguardando Aprovação, Em Reparo, Concluído, Entregue).
+- **Clientes:** Cadastro e gerenciamento de clientes.
+- **Ordens de Serviço:** Criação e acompanhamento de OSs com fluxo de status claro (Em Análise, Aguardando Aprovação, Em Reparo, Concluído, Entregue), incluindo dados do aparelho.
 
 ## Status do Projeto
 
@@ -35,14 +36,16 @@ O projeto NerdOS API encontra-se atualmente em **desenvolvimento ativo**.
 
 **Fase Atual:** Implementação de Módulos
 
-**Última Atualização:** 21/11/2025
+**Última Atualização:** 29/11/2025
 
 ### Progresso Recente
 
-- ✅ **Infraestrutura completa:** Banco de dados PostgreSQL configurado com Prisma
+- ✅ **Infraestrutura completa:** Banco de dados PostgreSQL configurado com Prisma 7.0.1
 - ✅ **Aplicação Fastify:** Configurada com validação Zod e documentação Swagger
 - ✅ **CRUD de Clientes:** Implementado com arquitetura em camadas (Routes → Controller → Service → Model)
-- 🚧 **Em desenvolvimento:** Módulos de Aparelhos e Ordens de Serviço
+- ✅ **Histórico de Cliente:** Endpoint consolidado para visualização de dispositivos e OSs
+- ❌ **Módulo de Aparelhos removido:** Dados de dispositivos serão gerenciados via Ordens de Serviço
+- 🚧 **Em desenvolvimento:** Módulo de Ordens de Serviço
 
 Para mais detalhes sobre o progresso, consulte [docs/Progresso.md](docs/Progresso.md).
 
@@ -56,16 +59,15 @@ As principais funcionalidades planejadas para a plataforma incluem:
 - Autenticação segura com hash de senha.
 - Validação de dados de entrada com critérios de segurança.
 
-**Funcionalidades de Clientes e Aparelhos:**
+**Funcionalidades de Clientes:**
 
 - ✅ CRUD completo de Clientes (Nome, Sobrenome, DDD, Telefone/WhatsApp, CPF) - **Implementado**
-- 🚧 CRUD completo de Aparelhos vinculados a Clientes (Marca, Modelo, IMEI/Nº Série) - **Em desenvolvimento**
-- 🚧 Consulta de histórico do cliente (aparelhos + OSs) - **Planejado**
+- ✅ Consulta de histórico do cliente (aparelhos + OSs) - **Implementado**
 
 **Funcionalidades de Ordem de Serviço:**
 
-- Criação de OS vinculada a Cliente e Aparelho.
-- Geração automática de número de OS sequencial e único.
+- Criação de OS vinculada a Cliente (com dados do aparelho incluídos na OS).
+- Geração automática de ID de OS (formato Char(15)).
 - Gestão de status da OS com fluxo claro.
 - Atualização de diagnóstico técnico, serviço realizado, peças utilizadas e valor final.
 - Endpoints de Dashboard com estatísticas de OS e faturamento.
@@ -75,10 +77,10 @@ As principais funcionalidades planejadas para a plataforma incluem:
 O desenvolvimento da NerdOS API utiliza as seguintes tecnologias:
 
 - **Linguagem:** TypeScript
-- **Build Tool:** npm
+- **Build Tool:** pnpm
 - **Framework Backend:** Fastify
 - **Framework de Testes:** Jest
-- **SGBD Relacional:** PostgreSQL (Hospedado no Supabase)
+- **SGBD Relacional:** PostgreSQL (Hospedado no Neon)
 - **ORM:** Prisma
 - **Autenticação:** jsonwebtoken com bcryptjs para hash de senhas
 - **Validação de Schemas:** Zod (Integrado via `fastify-type-provider-zod`)

@@ -88,24 +88,14 @@ export async function deactivateCustomer(req: FastifyRequest<{
     return;
 }
 
-// GET /customers/{id}/devices - Lista dispositivos de um cliente
-export async function getCustomerDevices(req: FastifyRequest<{
+// GET /customers/{id}/history - Expõe histórico de um cliente
+export async function getCustomerHistory(req: FastifyRequest<{
     Params: {
         id: string;
     }
 }>, rep: FastifyReply) {
     const id = parseInt(req.params.id);
-    return await CustomerService.getDevices(id);
-}
-
-// GET /customers/{id}/service-orders - Lista ordens de serviço de um cliente
-export async function getCustomerServiceOrders(req: FastifyRequest<{
-    Params: {
-        id: string;
-    }
-}>, rep: FastifyReply) {
-    const id = parseInt(req.params.id);
-    return await CustomerService.getServiceOrders(id);
+    return await CustomerService.getHistory(id);
 }
 
 // GET /customers/{id}/name - Busca o nome de um cliente

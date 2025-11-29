@@ -19,8 +19,22 @@ export const CreateCustomerSchema = CustomerSchema.omit({
 
 export const UpdateCustomerSchema = CreateCustomerSchema.partial()
 
+export const CustomerHistorySchema = CustomerSchema.omit({
+    id: true,
+    ddd: true,
+    phone: true,
+    cpf: true,
+    createdAt: true,
+    updatedAt: true
+}).extend({
+    devices: z.array(z.any()),
+    serviceOrders: z.array(z.any())
+})
+
 export type Customer = z.infer<typeof CustomerSchema>
 
 export type CreateCustomer = z.infer<typeof CreateCustomerSchema>
 
 export type UpdateCustomer = z.infer<typeof UpdateCustomerSchema>
+
+export type CustomerHistory = z.infer<typeof CustomerHistorySchema>

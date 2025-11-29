@@ -3,7 +3,7 @@
 ## Tecnologias Utilizadas
 
 - **Linguagem:** TypeScript
-- **Build Tool:** npm
+- **Build Tool:** pnpm
 - **Framework Backend:** Fastify
 - **Framework de Testes:** Jest
 - **SGBD Relacional:** PostgreSQL (Hospedado no Neon)
@@ -16,11 +16,8 @@
 .
 ├── node_modules/
 ├── src/
-│   ├── database/
-│   │   ├── conn.ts
 │   ├── modules/
 │   │   ├── customers/
-│   │   ├── devices/
 │   │   ├── service-orders/
 │   │   └── auth/
 │   ├── plugins/
@@ -28,7 +25,7 @@
 │   │   └── support.ts
 │   ├── routes/
 │   │   ├── root.ts
-│   │   └── users.ts
+│   │   └── customer-routes.ts
 │   │   └── ...
 │   ├── schemas/
 │   └── app.ts
@@ -51,5 +48,5 @@
 
 ## Padrões de Uso de Ferramentas
 
-- **npm:** Para gerenciamento de dependências e execução.
+- **pnpm:** Para gerenciamento de dependências e execução.
 - **IDE:** VSCodium/VSCode para desenvolvimento.

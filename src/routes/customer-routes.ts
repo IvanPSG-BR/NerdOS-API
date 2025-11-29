@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { CreateCustomerSchema, CustomerSchema } from '../schemas/customer-schemas.js'
+import { CreateCustomerSchema, CustomerHistorySchema, CustomerSchema } from '../schemas/customer-schemas.js'
 import { z } from 'zod'
 import * as CustomerController from '../modules/customers/customer-controller.js'
 import { getOneSchema, getManySchema, postSchema, updateSchema, deleteSchema } from '../utils/route-schema-helpers.js'
@@ -38,13 +38,9 @@ const customerRoutes: FastifyPluginAsync = async (fastify, opts): Promise<void> 
         schema: deleteSchema(['customers'], 'Desativa um cliente')
     }, CustomerController.deactivateCustomer)
 
-    server.get('/customers/{id}/devices', {
-        schema: getManySchema(['customers'], 'Lista dispositivos de um cliente', z.any())
-    }, CustomerController.getCustomerDevices)
-
-    server.get('/customers/{id}/service-orders', {
-        schema: getManySchema(['customers'], 'Lista ordens de serviço de um cliente', z.any())
-    }, CustomerController.getCustomerServiceOrders)
+    server.get('/customers/{id}/history', {
+        schema: getOneSchema(['customers'], 'Expõe histórico de um cliente', CustomerHistorySchema)
+    }, CustomerController.getCustomerHistory)
 
     server.get('/customers/{id}/name', {
         schema: getOneSchema(['customers'], 'Busca o nome de um cliente', z.object({
